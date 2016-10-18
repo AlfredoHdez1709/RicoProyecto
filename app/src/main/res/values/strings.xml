@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">RICO</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="action_settings">Configuraciones</string>
+    <string name="notify">Notificaciones</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="facebook_app_id">1798872910397168</string>
+    <string name="cancel_login">Se cancelo el inicio</string>
+    <string name="error_login">Error al conectar</string>
+    <string name="firebase_error_login">Error al iniciar con firebases</string>
+
+
+    <!--Login-->
+    <string name="slogan">Una forma fácil de encontrar lo que quieres en tu ciudad</string>
+
+    <!--FragmentHome-->
+
+</resources>

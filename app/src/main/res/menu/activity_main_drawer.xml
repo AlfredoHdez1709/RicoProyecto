@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/ic_icon_home"
+            android:title="Inicio" />
+        <item
+            android:id="@+id/nav_notify"
+            android:icon="@drawable/ic_icon_notify"
+            android:title="Notificaciones" />
+        <item
+            android:id="@+id/nav_history"
+            android:icon="@drawable/ic_icon_history"
+            android:title="Historial" />
+
+    </group>
+
+    <item android:title="Mas opciones">
+        <menu>
+            <item
+                android:id="@+id/nav_config"
+                android:icon="@drawable/ic_icon_config"
+                android:title="Configuraciones" />
+            <item
+                android:id="@+id/nav_about"
+                android:icon="@drawable/ic_icon_about"
+                android:title="Acerca de" />
+        </menu>
+    </item>
+
+</menu>
