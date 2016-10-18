@@ -13,8 +13,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
+import com.google.android.gms.vision.text.Text;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.project.geekahr.ricoproyecto.Fragmentos.HistoryFragment;
@@ -28,42 +30,12 @@ import java.io.Serializable;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, Serializable{
 
-    private TextView nameTextView;
-    private TextView emailTextView;
-    private  TextView uiTextView;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
-
-        //Login
-
-       // nameTextView = (TextView) findViewById(R.id.nameTextView);
-        //emailTextView = (TextView) findViewById(R.id.emailTextView);
-       // uiTextView = (TextView) findViewById(R.id.uidTextView);
-
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if(user != null){
-            String name = user.getDisplayName();
-            String email = user.getDisplayName();
-            Uri photoUrl = user.getPhotoUrl();
-            String uid = user.getUid();
-
-
-
-
-            /*nameTextView.setText(name);
-            emailTextView.setText(email);
-            uiTextView.setText(uid);*/
-        }else{
-            goLoginScreen();
-        }
-
-
 
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -75,8 +47,30 @@ public class MainActivity extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
+
+
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        View headerView = navigationView.inflateHeaderView(R.layout.nav_header_main);
+        TextView txtname = (TextView) headerView.findViewById(R.id.name);
+        TextView txtemail = (TextView) headerView.findViewById(R.id.email);
+
+
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if(user != null){
+            String name = user.getDisplayName();
+            String email = user.getEmail();
+            Uri photoUrl = user.getPhotoUrl();
+
+
+            txtname.setText(name);
+            txtemail.setText(email);
+
+        }else{
+            goLoginScreen();
+        }
 
         FragmentManager fm = getFragmentManager();
 
@@ -84,7 +78,7 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-
+    //bo funciona
     //Login
     public void  goLoginScreen() {
         Intent intent = new Intent(this, LoginActivity.class);
