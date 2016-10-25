@@ -9,4 +9,13 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="profile_width">75dp</dimen>
     <dimen name="profile_height">75dp</dimen>
+
+
+    <!-- Medidas -->
+
+    <dimen name="dialog_body">24dp</dimen>
+    <dimen name="padding_between">20dp</dimen>
+    <dimen name="edit_text_padding">16dp</dimen>
+    <dimen name="normal_padding">8dp</dimen>
+    <dimen name="button_padding">24dp</dimen>
 </resources>

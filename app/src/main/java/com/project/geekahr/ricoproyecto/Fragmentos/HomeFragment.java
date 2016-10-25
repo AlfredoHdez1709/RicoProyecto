@@ -1,33 +1,47 @@
 package com.project.geekahr.ricoproyecto.Fragmentos;
 
 
+import android.Manifest;
+import android.app.Dialog;
 import android.app.Fragment;
+import android.content.Context;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
-
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.project.geekahr.ricoproyecto.R;
+import android.location.LocationListener;
 
 import java.util.Map;
 
 
 public class HomeFragment extends Fragment implements OnMapReadyCallback {
 
+    private GoogleMap mMap;
+    private Marker marcador;
+    double lat = 0.0;
+    double lng = 0.0;
 
 
     private OnFragmentInteractionListener mListener;
@@ -43,20 +57,24 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         //return inflater.inflate(R.layout.fragment_home, container, false);
 
-         FloatingActionButton fab = (FloatingActionButton)view.findViewById(R.id.btnSearch);
+
+        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.btnSearch);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Se presionó el btn flotante", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                final Dialog mydialog = new Dialog(getActivity());
+                mydialog.setTitle("Busqueda");
+                mydialog.setContentView(R.layout.dialogo_home);
+                mydialog.show();
+
+
+               /* Snackbar.make(view, "Se presionó el btn flotante", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();*/
             }
         });
 
         return view;
     }
-
-
-
 
 
     @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
@@ -65,26 +83,72 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
         super.onViewCreated(view, savedInstanceState);
 
 
-       MapFragment fragment = (MapFragment)getChildFragmentManager().findFragmentById(R.id.map);
+        MapFragment fragment = (MapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         fragment.getMapAsync(this);
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
 
-        LatLng cali = new LatLng(20.0655835,-98.763836);
-        googleMap.addMarker(new MarkerOptions()
-                .position(cali)
-                .title("Esta es tu ubicacion"));
+        mMap = googleMap;
+        miUbicacion();
 
-        CameraPosition cameraPosition = CameraPosition.builder()
-                .target(cali)
-                .zoom(15)
-                .build();
-
-        googleMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
     }
 
+
+    public void addmarcador(double lat, double lng) {
+        LatLng coordenadas = new LatLng(lat, lng);
+        CameraUpdate miUbicacion = CameraUpdateFactory.newLatLngZoom(coordenadas, 15);
+        if (marcador != null) marcador.remove();
+        marcador = mMap.addMarker(new MarkerOptions()
+                .position(coordenadas)
+                .title("Tu ubicacion actual"));
+
+                //.icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_launcher)));
+        mMap.animateCamera(miUbicacion);
+    }
+
+    private void actualizarUbicacion(Location location) {
+        if (location != null) {
+            lat = location.getLatitude();
+            lng = location.getLongitude();
+            addmarcador(lat, lng);
+        }
+    }
+
+    LocationListener locationListener = new LocationListener() {
+        @Override
+        public void onLocationChanged(Location location) {
+            actualizarUbicacion(location);
+        }
+
+        @Override
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+
+        }
+
+        @Override
+        public void onProviderEnabled(String provider) {
+
+        }
+
+        @Override
+        public void onProviderDisabled(String provider) {
+
+        }
+    };
+
+    private void miUbicacion() {
+
+        if (ActivityCompat.checkSelfPermission(getActivity().getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity().getApplicationContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        LocationManager locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+        Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        actualizarUbicacion(location);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,15000,0,locationListener);
+
+    }
 
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name

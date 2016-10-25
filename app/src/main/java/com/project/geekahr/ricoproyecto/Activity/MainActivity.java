@@ -2,7 +2,6 @@ package com.project.geekahr.ricoproyecto.Activity;
 
 import android.app.FragmentManager;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -15,14 +14,14 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-
-import com.google.android.gms.vision.text.Text;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.project.geekahr.ricoproyecto.Fragmentos.HistoryFragment;
 import com.project.geekahr.ricoproyecto.Fragmentos.HomeFragment;
 import com.project.geekahr.ricoproyecto.Fragmentos.NotifyFragment;
 import com.project.geekahr.ricoproyecto.R;
+
+
 
 import java.io.Serializable;
 
@@ -31,6 +30,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, Serializable{
 
 
+    FragmentManager fm = getFragmentManager();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,15 +58,19 @@ public class MainActivity extends AppCompatActivity
 
 
 
+
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if(user != null){
             String name = user.getDisplayName();
             String email = user.getEmail();
-            Uri photoUrl = user.getPhotoUrl();
+
+
 
 
             txtname.setText(name);
             txtemail.setText(email);
+
+
 
         }else{
             goLoginScreen();
@@ -108,9 +112,8 @@ public class MainActivity extends AppCompatActivity
 
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.content_main) {
-            return true;
+        if (id == R.id.notify) {
+            fm.beginTransaction().replace(R.id.content_main, new NotifyFragment()).commit();
         }
 
         return super.onOptionsItemSelected(item);
@@ -124,21 +127,24 @@ public class MainActivity extends AppCompatActivity
 
         boolean FragmentTransation = false;
 
-        FragmentManager fm = getFragmentManager();
+
 
         if (id == R.id.nav_home) {
             fm.beginTransaction().replace(R.id.content_main, new HomeFragment()).commit();
-
-
+            setTitle("Home");
         } else if (id == R.id.nav_notify) {
             fm.beginTransaction().replace(R.id.content_main, new NotifyFragment()).commit();
+            setTitle("Notificaciones");
         } else if (id == R.id.nav_history) {
             fm.beginTransaction().replace(R.id.content_main, new HistoryFragment()).commit();
+            setTitle("Historial de busqueda");
         }  else if (id == R.id.nav_config) {
             startActivity(new Intent(MainActivity.this, SettingActivity.class));
+
             return true;
         } else if (id == R.id.nav_about) {
             startActivity(new Intent(MainActivity.this, AboutUsActivity.class));
+
             return true;
         }
 
@@ -148,9 +154,4 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-  /*  public void logout(View view) {
-        FirebaseAuth.getInstance().signOut();
-        LoginManager.getInstance().logOut();
-        goLoginScreen();
-    }*/
 }

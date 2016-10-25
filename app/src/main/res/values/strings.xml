@@ -12,6 +12,11 @@
     <string name="error_login">Error al conectar</string>
     <string name="firebase_error_login">Error al iniciar con firebases</string>
 
+    <!-- Dialog Home -->
+
+    <string name="txttitle">Busqueda por filtro</string>
+    <string name="btnfiltrar">Iniciar busqueda por filtro</string>
+
 
     <!--Login-->
     <string name="slogan">Una forma fácil de encontrar lo que quieres en tu ciudad</string>
