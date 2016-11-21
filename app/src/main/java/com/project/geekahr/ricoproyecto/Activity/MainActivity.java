@@ -13,17 +13,22 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.facebook.login.widget.ProfilePictureView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.project.geekahr.ricoproyecto.Fragmentos.HistoryFragment;
 import com.project.geekahr.ricoproyecto.Fragmentos.HomeFragment;
 import com.project.geekahr.ricoproyecto.Fragmentos.NotifyFragment;
 import com.project.geekahr.ricoproyecto.R;
-
+import com.squareup.picasso.Picasso;
 
 
 import java.io.Serializable;
+
+import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
 
 public class MainActivity extends AppCompatActivity
@@ -59,12 +64,14 @@ public class MainActivity extends AppCompatActivity
 
 
 
+
+
+
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if(user != null){
             String name = user.getDisplayName();
             String email = user.getEmail();
-
-
+            String userid = user.getUid();
 
 
             txtname.setText(name);

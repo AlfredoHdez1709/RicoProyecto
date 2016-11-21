@@ -18,6 +18,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -42,7 +44,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
     private Marker marcador;
     double lat = 0.0;
     double lng = 0.0;
-
+    int permissionGeo = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION);
 
     private OnFragmentInteractionListener mListener;
 
@@ -53,9 +55,9 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-        //return inflater.inflate(R.layout.fragment_home, container, false);
+
 
 
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.btnSearch);
@@ -67,9 +69,6 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
                 mydialog.setContentView(R.layout.dialogo_home);
                 mydialog.show();
 
-
-               /* Snackbar.make(view, "Se presionó el btn flotante", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();*/
             }
         });
 
@@ -90,6 +89,8 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public void onMapReady(GoogleMap googleMap) {
 
+
+
         mMap = googleMap;
         miUbicacion();
 
@@ -103,8 +104,7 @@ public class HomeFragment extends Fragment implements OnMapReadyCallback {
         marcador = mMap.addMarker(new MarkerOptions()
                 .position(coordenadas)
                 .title("Tu ubicacion actual"));
-
-                //.icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_launcher)));
+               // .icon(BitmapDescriptorFactory.fromResource(R.mipmap.ic_launcher)));
         mMap.animateCamera(miUbicacion);
     }
 

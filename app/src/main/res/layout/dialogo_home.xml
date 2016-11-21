@@ -6,40 +6,87 @@
     android:padding="@dimen/dialog_body">
 
 
+    <Spinner
+
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/spiner"
+        android:spinnerMode="dialog"
+        android:dropDownWidth="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+
+
+        android:textAlignment="center"
+        ></Spinner>
+
     <TextView
-        android:id="@+id/info_text"
+        android:text="Distancia"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:gravity="center"
-        android:textSize="25dp"
-        android:paddingBottom="@dimen/padding_between"
-        android:paddingTop="@dimen/padding_between"
-        android:text="@string/txttitle"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:id="@+id/distancia"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:layout_marginTop="12dp"
+        android:layout_below="@+id/spiner"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <SeekBar
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:max="10000"
+        android:progress="500"
+        android:id="@+id/seekBar2"
+        android:layout_alignTop="@+id/distancia"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="44dp"
+        />
+
+    <TextView
+        android:text="Costo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/costo"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        android:layout_below="@+id/seekBar2"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="23dp" />
+
+    <SeekBar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/seekBar7"
+        android:layout_below="@+id/costo"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="16dp"
+        android:max="200"
+        android:progress="30"/>
 
     <View
         android:id="@+id/divider"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_below="@+id/info_text"
-        android:layout_marginBottom="@dimen/padding_between"
-        android:layout_marginTop="@dimen/padding_between"
-        android:background="#C8C9CB" />
-
-
-
-
+        android:background="#C8C9CB"
+        android:layout_below="@+id/seekBar7"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="11dp" />
 
     <CheckBox
         android:id="@+id/recordar_check"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/divider"
         android:checked="false"
-        android:text="Favoritos" />
-
+        android:text="Favoritos"
+        android:layout_below="@+id/divider"
+        android:layout_marginTop="17dp" />
 
     <Button
         android:id="@+id/btnfiltrar"
@@ -52,8 +99,6 @@
         android:textColor="@color/textoblanco"
         android:layout_below="@+id/recordar_check"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="16dp" />
-
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>
